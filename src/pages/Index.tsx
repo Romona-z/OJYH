@@ -2,8 +2,11 @@ import React from 'react';
 import { Stethoscope, Users, Baby, Activity, Video, FileText, ChevronRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
+  const navigate = useNavigate();
+
   const contentSections = [
     {
       id: 'adult-asthma',
@@ -12,7 +15,8 @@ const Index = () => {
       color: 'bg-blue-50 border-blue-200',
       iconColor: 'text-blue-600',
       description: '成人哮喘诊疗指南与治疗方案',
-      count: '12篇文章'
+      count: '12篇文章',
+      path: null
     },
     {
       id: 'pediatric-asthma',
@@ -21,7 +25,8 @@ const Index = () => {
       color: 'bg-green-50 border-green-200',
       iconColor: 'text-green-600',
       description: '儿童哮喘管理与用药指导',
-      count: '8篇文章'
+      count: '8篇文章',
+      path: null
     },
     {
       id: 'rhinitis',
@@ -30,7 +35,8 @@ const Index = () => {
       color: 'bg-purple-50 border-purple-200',
       iconColor: 'text-purple-600',
       description: '过敏性鼻炎与慢性鼻炎治疗',
-      count: '15篇文章'
+      count: '15篇文章',
+      path: '/rhinitis'
     },
     {
       id: 'video-education',
@@ -39,9 +45,16 @@ const Index = () => {
       color: 'bg-orange-50 border-orange-200',
       iconColor: 'text-orange-600',
       description: '患者教育视频，临床演示专用',
-      count: '24个视频'
+      count: '24个视频',
+      path: null
     }
   ];
+
+  const handleSectionClick = (section) => {
+    if (section.path) {
+      navigate(section.path);
+    }
+  };
 
   const latestResearch = [
     {
@@ -90,6 +103,7 @@ const Index = () => {
               <Card 
                 key={section.id} 
                 className={`${section.color} hover:shadow-md transition-shadow cursor-pointer`}
+                onClick={() => handleSectionClick(section)}
               >
                 <CardContent className="p-4">
                   <div className="flex flex-col items-center text-center">
