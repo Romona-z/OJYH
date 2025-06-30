@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Stethoscope, Users, Baby, Activity, Video, FileText, ChevronRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -80,17 +81,13 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-        <div className="max-w-md mx-auto px-4 py-8">
-          <div className="flex items-center justify-center mb-4">
-            <Stethoscope className="h-8 w-8 mr-3" />
-            <h1 className="text-2xl font-bold">呼吸治疗科普</h1>
-          </div>
-          <p className="text-center text-blue-100 text-sm leading-relaxed">
-            "让每一次呼吸都更健康"<br />
-            专业医学内容，助力临床诊疗
-          </p>
-        </div>
+      <div className="relative overflow-hidden">
+        <img 
+          src="/lovable-uploads/d40cd99a-f8b2-471c-827f-8174d728e7fe.png" 
+          alt="呼吸治疗科普 Banner" 
+          className="w-full h-48 object-cover"
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-20"></div>
       </div>
 
       {/* Main Content */}
