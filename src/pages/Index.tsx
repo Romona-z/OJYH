@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Stethoscope, Users, Baby, Activity, Calendar, FileText, ChevronRight } from 'lucide-react';
+import { Stethoscope, Users, Baby, Activity, Video, FileText, ChevronRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
@@ -34,13 +33,13 @@ const Index = () => {
       count: '15篇文章'
     },
     {
-      id: 'conferences',
-      title: '学术会议',
-      icon: Calendar,
+      id: 'video-education',
+      title: '视频科普',
+      icon: Video,
       color: 'bg-orange-50 border-orange-200',
       iconColor: 'text-orange-600',
-      description: '最新会议通知与学术动态',
-      count: '3个会议'
+      description: '患者教育视频，临床演示专用',
+      count: '24个视频'
     }
   ];
 
@@ -151,9 +150,9 @@ const Index = () => {
         <div className="grid grid-cols-2 gap-3">
           <Card className="bg-white border hover:shadow-md transition-shadow cursor-pointer">
             <CardContent className="p-4 text-center">
-              <Calendar className="h-6 w-6 text-blue-600 mx-auto mb-2" />
-              <p className="text-sm font-medium text-gray-800">会议日程</p>
-              <p className="text-xs text-gray-500">查看近期学术活动</p>
+              <Video className="h-6 w-6 text-blue-600 mx-auto mb-2" />
+              <p className="text-sm font-medium text-gray-800">患者演示</p>
+              <p className="text-xs text-gray-500">临床视频教学资源</p>
             </CardContent>
           </Card>
           
