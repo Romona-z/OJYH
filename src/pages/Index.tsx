@@ -1,11 +1,170 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React from 'react';
+import { Stethoscope, Users, Baby, Activity, Calendar, FileText, ChevronRight } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 const Index = () => {
+  const contentSections = [
+    {
+      id: 'adult-asthma',
+      title: '成人哮喘',
+      icon: Users,
+      color: 'bg-blue-50 border-blue-200',
+      iconColor: 'text-blue-600',
+      description: '成人哮喘诊疗指南与治疗方案',
+      count: '12篇文章'
+    },
+    {
+      id: 'pediatric-asthma',
+      title: '儿童哮喘',
+      icon: Baby,
+      color: 'bg-green-50 border-green-200',
+      iconColor: 'text-green-600',
+      description: '儿童哮喘管理与用药指导',
+      count: '8篇文章'
+    },
+    {
+      id: 'rhinitis',
+      title: '鼻炎治疗',
+      icon: Activity,
+      color: 'bg-purple-50 border-purple-200',
+      iconColor: 'text-purple-600',
+      description: '过敏性鼻炎与慢性鼻炎治疗',
+      count: '15篇文章'
+    },
+    {
+      id: 'conferences',
+      title: '学术会议',
+      icon: Calendar,
+      color: 'bg-orange-50 border-orange-200',
+      iconColor: 'text-orange-600',
+      description: '最新会议通知与学术动态',
+      count: '3个会议'
+    }
+  ];
+
+  const latestResearch = [
+    {
+      title: '新型支气管扩张剂在哮喘治疗中的应用研究',
+      date: '2024-06-28',
+      tag: '最新研究',
+      isNew: true
+    },
+    {
+      title: '儿童哮喘长期管理策略的临床证据更新',
+      date: '2024-06-25',
+      tag: '指南更新',
+      isNew: true
+    },
+    {
+      title: '过敏性鼻炎免疫治疗的最新进展',
+      date: '2024-06-20',
+      tag: '综述',
+      isNew: false
+    }
+  ];
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header Banner */}
+      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+        <div className="max-w-md mx-auto px-4 py-8">
+          <div className="flex items-center justify-center mb-4">
+            <Stethoscope className="h-8 w-8 mr-3" />
+            <h1 className="text-2xl font-bold">呼吸治疗科普</h1>
+          </div>
+          <p className="text-center text-blue-100 text-sm leading-relaxed">
+            "让每一次呼吸都更健康"<br />
+            专业医学内容，助力临床诊疗
+          </p>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-md mx-auto px-4 pb-6">
+        {/* Content Sections */}
+        <div className="grid grid-cols-2 gap-3 -mt-6 mb-6">
+          {contentSections.map((section) => {
+            const IconComponent = section.icon;
+            return (
+              <Card 
+                key={section.id} 
+                className={`${section.color} hover:shadow-md transition-shadow cursor-pointer`}
+              >
+                <CardContent className="p-4">
+                  <div className="flex flex-col items-center text-center">
+                    <div className={`p-3 rounded-full bg-white mb-3 ${section.iconColor}`}>
+                      <IconComponent className="h-6 w-6" />
+                    </div>
+                    <h3 className="font-semibold text-gray-800 mb-1">{section.title}</h3>
+                    <p className="text-xs text-gray-600 mb-2">{section.description}</p>
+                    <Badge variant="secondary" className="text-xs">
+                      {section.count}
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+
+        {/* Latest Research Section */}
+        <Card className="mb-4">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center text-lg">
+              <FileText className="h-5 w-5 mr-2 text-blue-600" />
+              最新研究动态
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="space-y-3">
+              {latestResearch.map((research, index) => (
+                <div key={index} className="flex items-start justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
+                  <div className="flex-1">
+                    <div className="flex items-center mb-1">
+                      <Badge 
+                        variant={research.tag === '最新研究' ? 'default' : 'secondary'} 
+                        className="text-xs mr-2"
+                      >
+                        {research.tag}
+                      </Badge>
+                      {research.isNew && (
+                        <Badge variant="destructive" className="text-xs">
+                          新
+                        </Badge>
+                      )}
+                    </div>
+                    <h4 className="font-medium text-sm text-gray-800 leading-tight mb-1">
+                      {research.title}
+                    </h4>
+                    <p className="text-xs text-gray-500">{research.date}</p>
+                  </div>
+                  <ChevronRight className="h-4 w-4 text-gray-400 ml-2 flex-shrink-0" />
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Quick Actions */}
+        <div className="grid grid-cols-2 gap-3">
+          <Card className="bg-white border hover:shadow-md transition-shadow cursor-pointer">
+            <CardContent className="p-4 text-center">
+              <Calendar className="h-6 w-6 text-blue-600 mx-auto mb-2" />
+              <p className="text-sm font-medium text-gray-800">会议日程</p>
+              <p className="text-xs text-gray-500">查看近期学术活动</p>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-white border hover:shadow-md transition-shadow cursor-pointer">
+            <CardContent className="p-4 text-center">
+              <FileText className="h-6 w-6 text-green-600 mx-auto mb-2" />
+              <p className="text-sm font-medium text-gray-800">临床指南</p>
+              <p className="text-xs text-gray-500">最新诊疗指南下载</p>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
