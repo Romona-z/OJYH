@@ -46,7 +46,7 @@ const Index = () => {
       iconColor: 'text-orange-600',
       description: '患者教育视频，临床演示专用',
       count: '24个视频',
-      path: null
+      path: '/video-education'
     }
   ];
 
