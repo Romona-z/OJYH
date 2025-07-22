@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ArrowLeft, Search, Filter, Calendar, FileText, BookOpen } from 'lucide-react';
+import { ArrowLeft, Search, Filter, Calendar, FileText, BookOpen, Stethoscope, Pill, Heart, Wind } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -46,49 +46,54 @@ const RhinitisPage = () => {
   const articles = [
     {
       id: 1,
-      title: '鼻喷激素在过敏性鼻炎治疗中的合理应用',
-      date: '2024-06-28',
-      year: '2024',
-      category: '临床研究',
-      author: '张医生等',
-      journal: '中华耳鼻咽喉头颈外科杂志',
-      isNew: true
+      title: '【医院】同一气道，同一对策',
+      date: '2025-03-06',
+      year: '2025',
+      category: '医学软文',
+      author: '医院专家团队',
+      journal: '呼吸医学期刊',
+      isNew: true,
+      thumbnail: 'lungs'
     },
     {
       id: 2,
-      title: '免疫治疗在过敏性鼻炎中的长期效果评估',
-      date: '2024-06-20',
+      title: '【医院】糖皮质激素可能难以阻断白三烯介导的炎症，ICS+LTRA双通道抗炎更有效（医学软文）',
+      date: '2024-06-07',
       year: '2024',
-      category: '综述',
-      author: '李医生等',
-      journal: '中国耳鼻咽喉头颈外科',
-      isNew: true
+      category: '临床研究',
+      author: '呼吸科专家',
+      journal: '临床医学杂志',
+      isNew: true,
+      thumbnail: 'pills'
     },
     {
       id: 3,
-      title: '慢性鼻窦炎手术适应症的临床决策',
-      date: '2024-05-15',
+      title: '【医院】百日咳来袭，久咳不愈一定是因为患上百日咳吗？（医学软文）',
+      date: '2024-05-22',
       year: '2024',
-      category: '病例分析',
-      author: '王医生等',
-      journal: '临床耳鼻咽喉头颈外科杂志',
-      isNew: false
+      category: '疾病科普',
+      author: '儿科专家',
+      journal: '儿科医学期刊',
+      isNew: false,
+      thumbnail: 'cough'
     },
     {
       id: 4,
-      title: '过敏性鼻炎与哮喘的关联性研究进展',
-      date: '2023-12-08',
-      year: '2023',
-      category: '综述',
-      author: '陈医生等',
-      journal: '中华医学杂志',
-      isNew: false
+      title: '【医院】重视哮喘的小气道病变和管理（医学软文）',
+      date: '2024-04-28',
+      year: '2024',
+      category: '哮喘管理',
+      author: '呼吸科医师',
+      journal: '哮喘研究杂志',
+      isNew: false,
+      thumbnail: 'inhaler'
     },
   ];
 
-  const years = ['all', '2024', '2023', '2022'];
+  const years = ['all', '2025', '2024', '2023', '2022'];
   const yearLabels = {
     all: '全部',
+    '2025': '2025年',
     '2024': '2024年',
     '2023': '2023年',
     '2022': '2022年'
@@ -106,6 +111,35 @@ const RhinitisPage = () => {
 
   const filteredGuidelines = filterItems(guidelines, searchQuery, selectedYear);
   const filteredArticles = filterItems(articles, searchQuery, selectedYear);
+  const getThumbnailIcon = (thumbnail) => {
+    switch (thumbnail) {
+      case 'lungs':
+        return Stethoscope;
+      case 'pills':
+        return Pill;
+      case 'cough':
+        return Heart;
+      case 'inhaler':
+        return Wind;
+      default:
+        return FileText;
+    }
+  };
+
+  const getThumbnailColor = (thumbnail) => {
+    switch (thumbnail) {
+      case 'lungs':
+        return 'bg-blue-100 text-blue-600';
+      case 'pills':
+        return 'bg-orange-100 text-orange-600';
+      case 'cough':
+        return 'bg-green-100 text-green-600';
+      case 'inhaler':
+        return 'bg-purple-100 text-purple-600';
+      default:
+        return 'bg-gray-100 text-gray-600';
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -175,37 +209,43 @@ const RhinitisPage = () => {
                   <p>暂无相关文章</p>
                 </div>
               ) : (
-                filteredArticles.map((article) => (
-                  <Card key={article.id} className="hover:shadow-md transition-shadow cursor-pointer">
-                    <CardContent className="p-4">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center mb-2">
-                            <Badge variant="secondary" className="text-xs mr-2">
-                              {article.category}
-                            </Badge>
-                            {article.isNew && (
-                              <Badge variant="destructive" className="text-xs">
-                                新
+                filteredArticles.map((article) => {
+                  const ThumbnailIcon = getThumbnailIcon(article.thumbnail);
+                  return (
+                    <Card key={article.id} className="hover:shadow-md transition-shadow cursor-pointer">
+                      <CardContent className="p-4">
+                        <div className="flex items-start gap-3">
+                          <div className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${getThumbnailColor(article.thumbnail)}`}>
+                            <ThumbnailIcon className="h-6 w-6" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center mb-2">
+                              <Badge variant="secondary" className="text-xs mr-2">
+                                {article.category}
                               </Badge>
-                            )}
-                          </div>
-                          <h3 className="font-medium text-sm text-gray-800 leading-tight mb-2">
-                            {article.title}
-                          </h3>
-                          <div className="space-y-1 text-xs text-gray-600">
-                            <p>作者：{article.author}</p>
-                            <p>期刊：{article.journal}</p>
-                          </div>
-                          <div className="flex items-center text-xs text-gray-500 mt-2">
-                            <Calendar className="h-3 w-3 mr-1" />
-                            {article.date}
+                              {article.isNew && (
+                                <Badge variant="destructive" className="text-xs">
+                                  新
+                                </Badge>
+                              )}
+                            </div>
+                            <h3 className="font-medium text-sm text-gray-800 leading-tight mb-2">
+                              {article.title}
+                            </h3>
+                            <div className="space-y-1 text-xs text-gray-600">
+                              <p>作者：{article.author}</p>
+                              <p>期刊：{article.journal}</p>
+                            </div>
+                            <div className="flex items-center text-xs text-gray-500 mt-2">
+                              <Calendar className="h-3 w-3 mr-1" />
+                              {article.date}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
+                      </CardContent>
+                    </Card>
+                  );
+                })
               )}
             </div>
           </TabsContent>
