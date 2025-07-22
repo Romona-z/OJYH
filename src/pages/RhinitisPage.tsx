@@ -161,53 +161,11 @@ const RhinitisPage = () => {
         </div>
 
         {/* Tabs for Guidelines and Articles */}
-        <Tabs defaultValue="guidelines" className="w-full">
+        <Tabs defaultValue="articles" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="guidelines">诊疗指南</TabsTrigger>
             <TabsTrigger value="articles">学术文章</TabsTrigger>
+            <TabsTrigger value="guidelines">诊疗指南</TabsTrigger>
           </TabsList>
-          
-          <TabsContent value="guidelines" className="mt-4">
-            <div className="space-y-3">
-              {filteredGuidelines.length === 0 ? (
-                <div className="text-center py-8 text-gray-500">
-                  <FileText className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                  <p>暂无相关指南</p>
-                </div>
-              ) : (
-                filteredGuidelines.map((guideline) => (
-                  <Card key={guideline.id} className="hover:shadow-md transition-shadow cursor-pointer">
-                    <CardContent className="p-4">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center mb-2">
-                            <Badge variant="default" className="text-xs mr-2">
-                              {guideline.category}
-                            </Badge>
-                            {guideline.isNew && (
-                              <Badge variant="destructive" className="text-xs">
-                                新
-                              </Badge>
-                            )}
-                          </div>
-                          <h3 className="font-medium text-sm text-gray-800 leading-tight mb-2">
-                            {guideline.title}
-                          </h3>
-                          <p className="text-xs text-gray-600 mb-2">
-                            {guideline.description}
-                          </p>
-                          <div className="flex items-center text-xs text-gray-500">
-                            <Calendar className="h-3 w-3 mr-1" />
-                            {guideline.date}
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
-              )}
-            </div>
-          </TabsContent>
           
           <TabsContent value="articles" className="mt-4">
             <div className="space-y-3">
@@ -242,6 +200,48 @@ const RhinitisPage = () => {
                           <div className="flex items-center text-xs text-gray-500 mt-2">
                             <Calendar className="h-3 w-3 mr-1" />
                             {article.date}
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="guidelines" className="mt-4">
+            <div className="space-y-3">
+              {filteredGuidelines.length === 0 ? (
+                <div className="text-center py-8 text-gray-500">
+                  <FileText className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                  <p>暂无相关指南</p>
+                </div>
+              ) : (
+                filteredGuidelines.map((guideline) => (
+                  <Card key={guideline.id} className="hover:shadow-md transition-shadow cursor-pointer">
+                    <CardContent className="p-4">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center mb-2">
+                            <Badge variant="default" className="text-xs mr-2">
+                              {guideline.category}
+                            </Badge>
+                            {guideline.isNew && (
+                              <Badge variant="destructive" className="text-xs">
+                                新
+                              </Badge>
+                            )}
+                          </div>
+                          <h3 className="font-medium text-sm text-gray-800 leading-tight mb-2">
+                            {guideline.title}
+                          </h3>
+                          <p className="text-xs text-gray-600 mb-2">
+                            {guideline.description}
+                          </p>
+                          <div className="flex items-center text-xs text-gray-500">
+                            <Calendar className="h-3 w-3 mr-1" />
+                            {guideline.date}
                           </div>
                         </div>
                       </div>
