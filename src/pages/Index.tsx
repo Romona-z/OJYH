@@ -78,6 +78,27 @@ const Index = () => {
     }
   ];
 
+  const academicConferences = [
+    {
+      title: '2024年中华医学会呼吸病学年会',
+      date: '2024-07-15',
+      tag: '学术会议',
+      isNew: true
+    },
+    {
+      title: '亚太地区哮喘与COPD学术论坛',
+      date: '2024-07-10',
+      tag: '国际会议',
+      isNew: true
+    },
+    {
+      title: '儿童呼吸系统疾病诊疗进展研讨会',
+      date: '2024-07-05',
+      tag: '专题会议',
+      isNew: false
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Banner */}
@@ -157,24 +178,48 @@ const Index = () => {
           </CardContent>
         </Card>
 
-        {/* Quick Actions */}
-        <div className="grid grid-cols-2 gap-3">
-          <Card className="bg-white border hover:shadow-md transition-shadow cursor-pointer">
-            <CardContent className="p-4 text-center">
-              <Video className="h-6 w-6 text-blue-600 mx-auto mb-2" />
-              <p className="text-sm font-medium text-gray-800">患者演示</p>
-              <p className="text-xs text-gray-500">临床视频教学资源</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-white border hover:shadow-md transition-shadow cursor-pointer">
-            <CardContent className="p-4 text-center">
-              <FileText className="h-6 w-6 text-green-600 mx-auto mb-2" />
-              <p className="text-sm font-medium text-gray-800">临床指南</p>
-              <p className="text-xs text-gray-500">最新诊疗指南下载</p>
-            </CardContent>
-          </Card>
-        </div>
+        {/* Academic Conferences Section */}
+        <Card className="mb-4">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center text-lg">
+              <Users className="h-5 w-5 mr-2 text-green-600" />
+              学术会议
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="space-y-3">
+              {academicConferences.map((conference, index) => (
+                <div key={index} className="flex items-start justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
+                  <div className="flex-1">
+                    <div className="flex items-center mb-1">
+                      <Badge 
+                        variant={conference.tag === '学术会议' ? 'default' : 'secondary'} 
+                        className="text-xs mr-2"
+                      >
+                        {conference.tag}
+                      </Badge>
+                      {conference.isNew && (
+                        <Badge variant="destructive" className="text-xs">
+                          新
+                        </Badge>
+                      )}
+                    </div>
+                    <h4 className="font-medium text-sm text-gray-800 leading-tight mb-1">
+                      {conference.title}
+                    </h4>
+                    <p className="text-xs text-gray-500">{conference.date}</p>
+                  </div>
+                  <ChevronRight className="h-4 w-4 text-gray-400 ml-2 flex-shrink-0" />
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 text-center">
+              <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
+                查看全部
+              </button>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
