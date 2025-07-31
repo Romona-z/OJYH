@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import { ArrowLeft, Search, Filter, Calendar, FileText, BookOpen, Stethoscope, Pill, Heart, Wind } from 'lucide-react';
+import React from 'react';
+import { ArrowLeft, Calendar, FileText, BookOpen, Stethoscope, Pill, Heart, Wind } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -10,8 +10,6 @@ import { useNavigate } from 'react-router-dom';
 
 const RhinitisPage = () => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedYear, setSelectedYear] = useState('all');
 
   const guidelines = [
     {
@@ -90,27 +88,6 @@ const RhinitisPage = () => {
     },
   ];
 
-  const years = ['all', '2025', '2024', '2023', '2022'];
-  const yearLabels = {
-    all: '全部',
-    '2025': '2025年',
-    '2024': '2024年',
-    '2023': '2023年',
-    '2022': '2022年'
-  };
-
-  const filterItems = (items, query, year) => {
-    return items.filter(item => {
-      const matchesSearch = query === '' || 
-        item.title.toLowerCase().includes(query.toLowerCase()) ||
-        (item.author && item.author.toLowerCase().includes(query.toLowerCase()));
-      const matchesYear = year === 'all' || item.year === year;
-      return matchesSearch && matchesYear;
-    });
-  };
-
-  const filteredGuidelines = filterItems(guidelines, searchQuery, selectedYear);
-  const filteredArticles = filterItems(articles, searchQuery, selectedYear);
   const getThumbnailIcon = (thumbnail) => {
     switch (thumbnail) {
       case 'lungs':
@@ -164,35 +141,6 @@ const RhinitisPage = () => {
       </div>
 
       <div className="max-w-md mx-auto px-4 py-4">
-        {/* Search and Filter Bar */}
-        <div className="mb-4 space-y-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <Input
-              placeholder="搜索指南、文章或作者..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          
-          <div className="flex items-center gap-2">
-            <Filter className="h-4 w-4 text-gray-500" />
-            <div className="flex gap-2 flex-wrap">
-              {years.map((year) => (
-                <Button
-                  key={year}
-                  variant={selectedYear === year ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedYear(year)}
-                  className="text-xs"
-                >
-                  {yearLabels[year]}
-                </Button>
-              ))}
-            </div>
-          </div>
-        </div>
 
         {/* Tabs for Guidelines and Articles */}
         <Tabs defaultValue="articles" className="w-full">
@@ -203,13 +151,7 @@ const RhinitisPage = () => {
           
           <TabsContent value="articles" className="mt-4">
             <div className="space-y-3">
-              {filteredArticles.length === 0 ? (
-                <div className="text-center py-8 text-gray-500">
-                  <FileText className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                  <p>暂无相关文章</p>
-                </div>
-              ) : (
-                filteredArticles.map((article) => {
+              {articles.map((article) => {
                   const ThumbnailIcon = getThumbnailIcon(article.thumbnail);
                   return (
                     <Card key={article.id} className="hover:shadow-md transition-shadow cursor-pointer">
@@ -245,20 +187,13 @@ const RhinitisPage = () => {
                       </CardContent>
                     </Card>
                   );
-                })
-              )}
+                })}
             </div>
           </TabsContent>
           
           <TabsContent value="guidelines" className="mt-4">
             <div className="space-y-3">
-              {filteredGuidelines.length === 0 ? (
-                <div className="text-center py-8 text-gray-500">
-                  <FileText className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                  <p>暂无相关指南</p>
-                </div>
-              ) : (
-                filteredGuidelines.map((guideline) => (
+              {guidelines.map((guideline) => (
                   <Card key={guideline.id} className="hover:shadow-md transition-shadow cursor-pointer">
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between">
@@ -287,8 +222,7 @@ const RhinitisPage = () => {
                       </div>
                     </CardContent>
                   </Card>
-                ))
-              )}
+                ))}
             </div>
           </TabsContent>
         </Tabs>
