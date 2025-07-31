@@ -40,14 +40,14 @@ const Index = () => {
       path: '/rhinitis'
     },
     {
-      id: 'video-education',
-      title: '视频科普',
-      icon: Video,
+      id: 'academic-conferences',
+      title: '学术会议',
+      icon: Users,
       color: 'bg-orange-50 border-orange-200',
       iconColor: 'text-orange-600',
-      description: '患者教育视频，临床演示专用',
-      count: '24个视频',
-      path: '/video-education'
+      description: '学术会议信息与会议资料',
+      count: '6场会议',
+      path: null
     }
   ];
 
@@ -178,48 +178,6 @@ const Index = () => {
           </CardContent>
         </Card>
 
-        {/* Academic Conferences Section */}
-        <Card className="mb-4">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center text-lg">
-              <Users className="h-5 w-5 mr-2 text-green-600" />
-              学术会议
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <div className="space-y-3">
-              {academicConferences.map((conference, index) => (
-                <div key={index} className="flex items-start justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
-                  <div className="flex-1">
-                    <div className="flex items-center mb-1">
-                      <Badge 
-                        variant={conference.tag === '学术会议' ? 'default' : 'secondary'} 
-                        className="text-xs mr-2"
-                      >
-                        {conference.tag}
-                      </Badge>
-                      {conference.isNew && (
-                        <Badge variant="destructive" className="text-xs">
-                          新
-                        </Badge>
-                      )}
-                    </div>
-                    <h4 className="font-medium text-sm text-gray-800 leading-tight mb-1">
-                      {conference.title}
-                    </h4>
-                    <p className="text-xs text-gray-500">{conference.date}</p>
-                  </div>
-                  <ChevronRight className="h-4 w-4 text-gray-400 ml-2 flex-shrink-0" />
-                </div>
-              ))}
-            </div>
-            <div className="mt-4 text-center">
-              <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
-                查看全部
-              </button>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );
