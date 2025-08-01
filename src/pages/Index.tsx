@@ -121,7 +121,7 @@ const Index = () => {
         <img 
           src="/lovable-uploads/d40cd99a-f8b2-471c-827f-8174d728e7fe.png" 
           alt="呼吸治疗科普 Banner" 
-          className="w-full h-48 object-cover"
+          className="w-full h-32 object-cover"
         />
         <div className="absolute inset-0 bg-black bg-opacity-20"></div>
       </div>
