@@ -129,7 +129,7 @@ const Index = () => {
       {/* Main Content */}
       <div className="max-w-md mx-auto px-4 pb-6">
         {/* Disease Topics - 3 columns */}
-        <div className="grid grid-cols-3 gap-2 -mt-6 mb-4">
+        <div className="grid grid-cols-3 gap-2 -mt-6 mb-6">
           {diseaseTopics.map((section) => {
             const IconComponent = section.icon;
             return (
@@ -145,33 +145,6 @@ const Index = () => {
                     </div>
                     <h3 className="font-medium text-sm text-gray-800 mb-1">{section.title}</h3>
                     <p className="text-xs text-gray-600 mb-1 leading-tight">{section.description}</p>
-                    <Badge variant="secondary" className="text-xs">
-                      {section.count}
-                    </Badge>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-
-        {/* Academic Resources - 2 columns */}
-        <div className="grid grid-cols-2 gap-3 mb-6">
-          {academicResources.map((section) => {
-            const IconComponent = section.icon;
-            return (
-              <Card 
-                key={section.id} 
-                className={`${section.color} hover:shadow-md transition-shadow cursor-pointer`}
-                onClick={() => handleSectionClick(section)}
-              >
-                <CardContent className="p-4">
-                  <div className="flex flex-col items-center text-center">
-                    <div className={`p-3 rounded-full bg-white mb-3 ${section.iconColor}`}>
-                      <IconComponent className="h-6 w-6" />
-                    </div>
-                    <h3 className="font-semibold text-gray-800 mb-1">{section.title}</h3>
-                    <p className="text-xs text-gray-600 mb-2">{section.description}</p>
                     <Badge variant="secondary" className="text-xs">
                       {section.count}
                     </Badge>
@@ -219,6 +192,33 @@ const Index = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Academic Resources - 2 columns */}
+        <div className="grid grid-cols-2 gap-3">
+          {academicResources.map((section) => {
+            const IconComponent = section.icon;
+            return (
+              <Card 
+                key={section.id} 
+                className={`${section.color} hover:shadow-md transition-shadow cursor-pointer`}
+                onClick={() => handleSectionClick(section)}
+              >
+                <CardContent className="p-4">
+                  <div className="flex flex-col items-center text-center">
+                    <div className={`p-3 rounded-full bg-white mb-3 ${section.iconColor}`}>
+                      <IconComponent className="h-6 w-6" />
+                    </div>
+                    <h3 className="font-semibold text-gray-800 mb-1">{section.title}</h3>
+                    <p className="text-xs text-gray-600 mb-2">{section.description}</p>
+                    <Badge variant="secondary" className="text-xs">
+                      {section.count}
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
 
       </div>
     </div>
