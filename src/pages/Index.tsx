@@ -129,7 +129,7 @@ const Index = () => {
       {/* Main Content */}
       <div className="max-w-md mx-auto px-4 pb-6">
         {/* Disease Topics - 3 columns */}
-        <div className="grid grid-cols-3 gap-2 -mt-6 mb-6">
+        <div className="grid grid-cols-3 gap-2 mt-2 mb-6">
           {diseaseTopics.map((section) => {
             const IconComponent = section.icon;
             return (
