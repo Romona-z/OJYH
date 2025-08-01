@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Stethoscope, Users, Baby, Activity, Video, FileText, ChevronRight } from 'lucide-react';
+import { Stethoscope, Users, Baby, Activity, Video, FileText, ChevronRight, BookOpen } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,8 @@ import { useNavigate } from 'react-router-dom';
 const Index = () => {
   const navigate = useNavigate();
 
-  const contentSections = [
+  // 疾病治疗专题
+  const diseaseTopics = [
     {
       id: 'adult-asthma',
       title: '成人哮喘',
@@ -38,6 +39,20 @@ const Index = () => {
       description: '过敏性鼻炎与慢性鼻炎治疗',
       count: '15篇文章',
       path: '/rhinitis'
+    }
+  ];
+
+  // 学术资源
+  const academicResources = [
+    {
+      id: 'clinical-guidelines',
+      title: '诊疗指南',
+      icon: BookOpen,
+      color: 'bg-red-50 border-red-200',
+      iconColor: 'text-red-600',
+      description: '权威诊疗指南与专家共识',
+      count: '25份指南',
+      path: null
     },
     {
       id: 'academic-conferences',
@@ -113,9 +128,36 @@ const Index = () => {
 
       {/* Main Content */}
       <div className="max-w-md mx-auto px-4 pb-6">
-        {/* Content Sections */}
-        <div className="grid grid-cols-2 gap-3 -mt-6 mb-6">
-          {contentSections.map((section) => {
+        {/* Disease Topics - 3 columns */}
+        <div className="grid grid-cols-3 gap-2 -mt-6 mb-4">
+          {diseaseTopics.map((section) => {
+            const IconComponent = section.icon;
+            return (
+              <Card 
+                key={section.id} 
+                className={`${section.color} hover:shadow-md transition-shadow cursor-pointer`}
+                onClick={() => handleSectionClick(section)}
+              >
+                <CardContent className="p-3">
+                  <div className="flex flex-col items-center text-center">
+                    <div className={`p-2 rounded-full bg-white mb-2 ${section.iconColor}`}>
+                      <IconComponent className="h-5 w-5" />
+                    </div>
+                    <h3 className="font-medium text-sm text-gray-800 mb-1">{section.title}</h3>
+                    <p className="text-xs text-gray-600 mb-1 leading-tight">{section.description}</p>
+                    <Badge variant="secondary" className="text-xs">
+                      {section.count}
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+
+        {/* Academic Resources - 2 columns */}
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          {academicResources.map((section) => {
             const IconComponent = section.icon;
             return (
               <Card 
