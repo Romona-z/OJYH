@@ -1,45 +1,16 @@
 
-import React from 'react';
-import { ArrowLeft, Calendar, FileText, BookOpen, Stethoscope, Pill, Heart, Wind } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import React, { useState } from 'react';
+import { ArrowLeft, Search, Calendar, FileText, BookOpen, Stethoscope, Pill, Heart, Wind } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
 const RhinitisPage = () => {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const guidelines = [
-    {
-      id: 1,
-      title: '过敏性鼻炎诊断和治疗指南（2022年修订版）',
-      date: '2024-06-15',
-      year: '2024',
-      category: '诊疗指南',
-      description: '中华医学会耳鼻咽喉头颈外科学会制定',
-      isNew: true
-    },
-    {
-      id: 2,
-      title: '慢性鼻窦炎诊断和治疗指南',
-      date: '2024-03-20',
-      year: '2024',
-      category: '诊疗指南',
-      description: '基于循证医学的最新治疗建议',
-      isNew: true
-    },
-    {
-      id: 3,
-      title: '儿童过敏性鼻炎管理共识',
-      date: '2023-11-10',
-      year: '2023',
-      category: '专家共识',
-      description: '儿科与耳鼻喉科联合制定',
-      isNew: false
-    },
-  ];
 
   const articles = [
     {
@@ -87,6 +58,14 @@ const RhinitisPage = () => {
       thumbnail: 'inhaler'
     },
   ];
+
+  // 过滤文章的函数
+  const filteredArticles = articles.filter(article => {
+    if (searchQuery === '') return true;
+    return article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+           article.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+           article.category.toLowerCase().includes(searchQuery.toLowerCase());
+  });
 
   const getThumbnailIcon = (thumbnail) => {
     switch (thumbnail) {
@@ -141,91 +120,66 @@ const RhinitisPage = () => {
       </div>
 
       <div className="max-w-md mx-auto px-4 py-4">
+        {/* Search Bar */}
+        <div className="mb-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Input
+              placeholder="搜索文章、作者或分类..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+        </div>
 
-        {/* Tabs for Guidelines and Articles */}
-        <Tabs defaultValue="articles" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="articles">学术文章</TabsTrigger>
-            <TabsTrigger value="guidelines">诊疗指南</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="articles" className="mt-4">
-            <div className="space-y-3">
-              {articles.map((article) => {
-                  const ThumbnailIcon = getThumbnailIcon(article.thumbnail);
-                  return (
-                    <Card key={article.id} className="hover:shadow-md transition-shadow cursor-pointer">
-                      <CardContent className="p-4">
-                        <div className="flex items-start gap-3">
-                          <div className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${getThumbnailColor(article.thumbnail)}`}>
-                            <ThumbnailIcon className="h-6 w-6" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center mb-2">
-                              <Badge variant="secondary" className="text-xs mr-2">
-                                {article.category}
-                              </Badge>
-                              {article.isNew && (
-                                <Badge variant="destructive" className="text-xs">
-                                  新
-                                </Badge>
-                              )}
-                            </div>
-                            <h3 className="font-medium text-sm text-gray-800 leading-tight mb-2">
-                              {article.title}
-                            </h3>
-                            <div className="space-y-1 text-xs text-gray-600">
-                              <p>作者：{article.author}</p>
-                              <p>期刊：{article.journal}</p>
-                            </div>
-                            <div className="flex items-center text-xs text-gray-500 mt-2">
-                              <Calendar className="h-3 w-3 mr-1" />
-                              {article.date}
-                            </div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
+        {/* Articles List */}
+        <div className="space-y-3">
+          {filteredArticles.length === 0 ? (
+            <div className="text-center py-8 text-gray-500">
+              <FileText className="h-8 w-8 mx-auto mb-2 opacity-50" />
+              <p>暂无相关文章</p>
             </div>
-          </TabsContent>
-          
-          <TabsContent value="guidelines" className="mt-4">
-            <div className="space-y-3">
-              {guidelines.map((guideline) => (
-                  <Card key={guideline.id} className="hover:shadow-md transition-shadow cursor-pointer">
-                    <CardContent className="p-4">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center mb-2">
-                            <Badge variant="default" className="text-xs mr-2">
-                              {guideline.category}
+          ) : (
+            filteredArticles.map((article) => {
+              const ThumbnailIcon = getThumbnailIcon(article.thumbnail);
+              return (
+                <Card key={article.id} className="hover:shadow-md transition-shadow cursor-pointer">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${getThumbnailColor(article.thumbnail)}`}>
+                        <ThumbnailIcon className="h-6 w-6" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center mb-2">
+                          <Badge variant="secondary" className="text-xs mr-2">
+                            {article.category}
+                          </Badge>
+                          {article.isNew && (
+                            <Badge variant="destructive" className="text-xs">
+                              新
                             </Badge>
-                            {guideline.isNew && (
-                              <Badge variant="destructive" className="text-xs">
-                                新
-                              </Badge>
-                            )}
-                          </div>
-                          <h3 className="font-medium text-sm text-gray-800 leading-tight mb-2">
-                            {guideline.title}
-                          </h3>
-                          <p className="text-xs text-gray-600 mb-2">
-                            {guideline.description}
-                          </p>
-                          <div className="flex items-center text-xs text-gray-500">
-                            <Calendar className="h-3 w-3 mr-1" />
-                            {guideline.date}
-                          </div>
+                          )}
+                        </div>
+                        <h3 className="font-medium text-sm text-gray-800 leading-tight mb-2">
+                          {article.title}
+                        </h3>
+                        <div className="space-y-1 text-xs text-gray-600">
+                          <p>作者：{article.author}</p>
+                          <p>期刊：{article.journal}</p>
+                        </div>
+                        <div className="flex items-center text-xs text-gray-500 mt-2">
+                          <Calendar className="h-3 w-3 mr-1" />
+                          {article.date}
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                ))}
-            </div>
-          </TabsContent>
-        </Tabs>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })
+          )}
+        </div>
       </div>
     </div>
   );
